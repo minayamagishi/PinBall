@@ -16,7 +16,7 @@ public class ScoreController : MonoBehaviour
     void Start()
     {
         //シーン中のScoreTextオブジェクトを取得
-        this.ScoreText = GameObject.Find("0");
+        this.ScoreText = GameObject.Find("ScoreText");
     }
 
     // Update is called once per frame
@@ -40,7 +40,7 @@ public class ScoreController : MonoBehaviour
         {
             this.score += 30;
         }
-    else if (tag == "LargeCloudTag")
+        else if (tag == "LargeCloudTag")
         {
             this.score += 40;
         }
