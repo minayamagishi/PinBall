@@ -28,19 +28,19 @@ public class ScoreController : MonoBehaviour
     void OnCollisionEnter(Collision other)
     {
         // タグによって得点を変える
-        if (tag == "SmallStarTag")
+        if (other.gameObject.tag == "SmallStarTag")
         {
             this.score += 10;
         }
-        else if (tag == "LargeStarTag")
+        else if (other.gameObject.tag == "LargeStarTag")
         {
             this.score += 20;
         }
-        else if (tag == "SmallCloudTag")
+        else if (other.gameObject.tag == "SmallCloudTag")
         {
             this.score += 30;
         }
-        else if (tag == "LargeCloudTag")
+        else if (other.gameObject.tag == "LargeCloudTag")
         {
             this.score += 40;
         }

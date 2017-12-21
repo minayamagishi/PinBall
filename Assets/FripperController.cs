@@ -25,6 +25,7 @@ public class FripperController : MonoBehaviour
     void Update()
     {
 
+        ////PC上の矢印キーによる操作
         //左矢印キーを押した時左フリッパーを動かす
         if (Input.GetKeyDown(KeyCode.LeftArrow) && tag == "LeftFripperTag")
         {
@@ -45,6 +46,59 @@ public class FripperController : MonoBehaviour
         {
             SetAngle(this.defaultAngle);
         }
+
+
+        ////スマホ上のタップによる操作
+
+        for (int i = 0; i < Input.touchCount; i++)
+        {
+            var id = Input.touches[i].fingerId;
+            var pos = Input.touches[i].position;
+            Debug.LogFormat("{0} - x:{1}, y:{2}", id, pos.x, pos.y);
+        }
+
+        foreach (Touch t in Input.touches)
+        {
+            var id = t.fingerId;
+
+            switch (t.phase)
+            {
+                case TouchPhase.Began:
+                    if (Input.touches[1] <= 0 && tag == "LeftFripperTag")
+                    {
+                        SetAngle(this.flickAngle);
+                    }
+                    if (Input.touches[1] <= 0 && tag == "RightFripperTag")
+                    {
+                        SetAngle(this.flickAngle);
+                    }
+
+                    Debug.LogFormat("{0}:いまタッチした", id);
+                    break;
+
+                case TouchPhase.Moved:
+                case TouchPhase.Stationary:
+                    Debug.LogFormat("{0}:タッチしている", id);
+                    break;
+
+                case TouchPhase.Ended:
+                case TouchPhase.Canceled:
+
+                    if (Input.touches[1] <= 0 && tag == "LeftFripperTag")
+                    {
+                        SetAngle(this.defaultAngle);
+                    }
+                    if (Input.touches[1] <= 0 && tag == "RightFripperTag")
+                    {
+                        SetAngle(this.defaultAngle);
+                    }
+
+
+                    Debug.LogFormat("{0}:いま離された", id);
+                    break;
+            }
+        }
+
     }
 
     //フリッパーの傾きを設定
