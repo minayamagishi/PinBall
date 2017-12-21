@@ -49,52 +49,33 @@ public class FripperController : MonoBehaviour
 
 
         ////スマホ上のタップによる操作
-
-        for (int i = 0; i < Input.touchCount; i++)
-        {
-            var id = Input.touches[i].fingerId;
-            var pos = Input.touches[i].position;
-            Debug.LogFormat("{0} - x:{1}, y:{2}", id, pos.x, pos.y);
-        }
-
         foreach (Touch t in Input.touches)
         {
-            var id = t.fingerId;
-
             switch (t.phase)
             {
                 case TouchPhase.Began:
-                    if (Input.touches[1] <= 0 && tag == "LeftFripperTag")
+                    //画面の左半分をタッチした時左フリッパーを動かす
+                    if (t.position.x < Screen.width / 2 && tag == "LeftFripperTag")
                     {
                         SetAngle(this.flickAngle);
                     }
-                    if (Input.touches[1] <= 0 && tag == "RightFripperTag")
+                    //画面の右半分をタッチした時右フリッパーを動かす
+                    if (t.position.x >= Screen.width / 2 && tag == "RightFripperTag")
                     {
                         SetAngle(this.flickAngle);
                     }
-
-                    Debug.LogFormat("{0}:いまタッチした", id);
                     break;
 
-                case TouchPhase.Moved:
-                case TouchPhase.Stationary:
-                    Debug.LogFormat("{0}:タッチしている", id);
-                    break;
-
+                //タッチが離された時フリッパーを元に戻す
                 case TouchPhase.Ended:
-                case TouchPhase.Canceled:
-
-                    if (Input.touches[1] <= 0 && tag == "LeftFripperTag")
+                    if (t.position.x < Screen.width / 2 && tag == "LeftFripperTag")
                     {
                         SetAngle(this.defaultAngle);
                     }
-                    if (Input.touches[1] <= 0 && tag == "RightFripperTag")
+                    if (t.position.x >= Screen.width / 2 && tag == "RightFripperTag")
                     {
                         SetAngle(this.defaultAngle);
                     }
-
-
-                    Debug.LogFormat("{0}:いま離された", id);
                     break;
             }
         }
